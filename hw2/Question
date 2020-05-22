@@ -1,0 +1,254 @@
+Part 1 (40 pts)
+In this assignment, you will practice the implementation of interfaces, in particular the Shape and PathIterator interface.
+
+Start by creating the following basic shape classes: (Code is available under Files/Hw2/Part1 )
+
+BasicShapeFrameTest.java
+ShapeFrame.java
+ShapePanel.java
+PositionedShape.java
+ShapeIcon.java
+
+Compile and run BasicShapeFrameTest. 
+The user interface is as follows: When you click on one of the buttons, then the shape inside the button becomes the “current shape”. 
+When you click with the mouse inside the panel above the buttons, then the current shape is added to the panel.
+
+Your job is to add the bottom three shapes in the figure below without modifying any of the above files.
+
+{short description of image}
+
+The grader will start your program using Hw2P1.java
+
+Hints:
+
+The addShape method takes a Shape parameter. 
+Thus, you need to produce three objects that implement the Shape interface.
+
+Don't worry about the sizes of your shapes. 
+They will be scaled to fit inside the button.
+
+The first two buttons (car and house) are similar—both are collections of shapes. 
+Can you take advantage of that similarity?
+
+Most of the methods required by the Shape interface are simple to implement. 
+The only hard ones are the ones involving the PathIterator.
+
+You will need to define a class implementing the PathIterator class for your class(es) implementing the Shape class. 
+Of course, you should have your path iterator call the path iterators of the individual shapes. 
+I had no trouble doing that without understanding just what it is that a path iterator does.
+
+I used a 24 point bold Sans Serif font for the "Hello" outline.
+
+To get the outline shape of a character string, use the TextLayout class. 
+There are a couple of challenges.
+
+You need a FontRenderContext before you have a Graphics2D object. 
+I ignored the warning in the API notes and created one like this: new FontRenderContext() {}. 
+(The {} are necessary—you will understand why when we discuss inner classes).
+You need to translate the shape by the ascent of the font in y-direction. 
+Use AffineTransform.getTranslateInstance.
+
+Deliverables:
+
+a file uml.gif with an UML diagram showing all relationships between all classes (yours and mine) of the program your java files include Hw2P1.java, etc. (one file for each class)
+ 
+---------------------------------------------------------------------------------
+
+Part 2 (40 pts)
+
+In this assignment, you will practice the implementation of the OBSERVER pattern.
+
+You will implement the “classical” example of the observer pattern—a data set and two views, one text view and one graphics view.
+
+{short description of image}
+
+The text view is a collection of JTextField components. 
+Editing a text field updates the model and hence the other view.
+
+The graphical view is a simple bar chart. 
+Clicking anywhere next to a bar moves the bar to the mouse position.
+
+The data model consists of an array of integers. 
+For simplicity, you may assume the integers are in a range that is suitable for plotting in pixels in the graphical view. 
+For example, the value 100 simply corresponds to 100 pixels.
+
+Give each bar a fixed height—I used private static final int HEIGHT = 20. 
+Then, when the user clicks on the point (x, y), the graphical view can tell the model to set the data point with index y/HEIGHT to x.
+
+You must use the Observer interface and Observable class. 
+Note that before calling notifyObservers in the model you need to call setChanged. 
+(The API documentation is potentially confusing on this issue.)
+
+Because we haven't yet covered inheritance, I need to tell you how to define the model and the views.
+
+public class DataModel extends Observable
+{
+   . . .
+}
+
+public class TextView extends Box implements Observer
+{
+   public TextView(DataModel aModel)
+   {
+      super(BoxLayout.Y_AXIS);
+      . . .
+   }
+   . . .
+}
+
+public class GraphView extends JPanel implements Observer
+{
+   public void paintComponent(Graphics g)
+   {
+      super.paintComponent(g);
+      Graphics2D g2 = (Graphics2D)g;
+      . . .
+   }
+   . . .
+}
+
+In the main method of the Hw2P2 program, do the following:
+
+Construct a DataModel
+Read input values from a file whose name is given in args[0] and set them in the data model.
+Construct a text view and a graph view.
+Make a frame and set its content pane to the text view. Pack it.
+Make a frame and set its content pane to the graph view. Set its bounds so it has a reasonable size and doesn't overlap with the text view. (Use setBounds)
+When either frame is closed, save the edited data in the text file and exit.
+
+The grader will start your program as
+
+java Hw2P2 datafile
+
+Hints:
+
+The Box class takes care of packing the JTextField components vertically. 
+Just call add to add them.
+
+To track the editing of a JTextField, attach a DocumentListener.
+
+field.getDocument().addDocumentListener(new DocumentListener() {
+      . . .
+   });
+   
+All three methods should do the same thing—tell the model the new value of the field
+To avoid parse errors when reading the text field contents, catch the NumberParseException like this:
+
+try
+{
+   model.set(index, Integer.parseInt(field.getText()));
+}
+catch (NumberFormatException exception)
+{
+}
+
+When you update the text fields because the model changes, first check to see that the value has actually changed. 
+(That avoids a nasty and somewhat mysterious concurrent modification exception.)
+if (!text.equals(field.getText()))
+   field.setText(text);
+Well, as some people observed, it doesn't actually eliminate all mysterious concurrent modification exceptions. 
+You can avoid more of them by checking whether the number values changed, like this:
+
+try
+{
+   if (Integer.parseInt(text + "0") != Integer.parseInt(field.getText() + "0"))
+      field.setText(text);
+}
+catch (NumberFormatException exception)
+{
+}
+
+That's pretty nasty, of course. 
+Or, when all else fails, you can actually do the right thing and avoid the concurrent modification altogether. 
+Introduce two fields
+int currentUpdate = -1;
+int currentChangedUpdate = -1; 
+and use them as follows:
+
+public void changedUpdate(DocumentEvent e)
+{
+   currentChangedUpdate = index;
+   if (currentUpdate != index)
+      try
+      {
+         model.set(index, Integer.parseInt(field.getText()));
+      }
+      catch (NumberFormatException exception)
+      {
+      }
+   currentChangedUpdate = -1;
+}
+
+and
+
+public void update(Observable o, Object arg)
+{
+   for (int i = 0; i < model.size(); i++)
+   {
+      currentUpdate = i;
+      . . .
+      if (currentChangedUpdate != i)
+         field.setText(text);
+      currentUpdate = -1;
+   }
+}
+
+Why all this grief? Because the AbstractDocument class violates a basic law of preconditions: The caller should be able to check the precondition (namely the read- and write lock settings) through the public interface of the class.
+When attaching a mouse listener to the graph view, extend the MouseAdapter class. 
+It defines all methods to do nothing. Just override mousePressed.
+
+addMouseListener(new MouseAdapter() {
+      public void mousePressed(MouseEvent event)
+      {
+         . . .
+      }
+   });
+   
+To save the data when the frames are being closed, attach a window listener like this:
+
+frame1.addWindowListener(new WindowAdapter) {
+      public void windowClosing(WindowEvent event)
+      {
+      }
+   });
+   
+Of course, you no longer use EXIT_ON_CLOSE.
+
+A sample input and output file is
+
+10
+20
+30
+40
+50
+60
+
+Use a new BufferedReader(new FileReader(fileName)).
+
+Do not use object serialization for the output.
+
+When saving the output file in the windowClosing method, you need a try/catch block:
+
+try
+{
+   // output instructions go here
+   PrintWriter writer = new PrintWriter(new FileWriter(fileName));
+   . . .
+}
+catch (IOException e)
+{
+   e.printStackTrace();
+}
+
+You'll need to grow the array to accommodate arbitrary size input.
+
+if (dataSize == data.length)
+{
+   int[] newData = new int[2 * dataSize];
+   System.arraycopy(...)
+} 
+
+Deliverables:
+
+a file uml.png with an UML diagram showing all relationships between all classes (yours and mine) of the program
+files Hw2P2.java, DataModel.java, TextView.java, GraphView.java. Don't supply any additional files— use inner classes for all event listeners.
