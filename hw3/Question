@@ -1,0 +1,52 @@
+Part 1 - Inheritance (15 pts)
+
+You're asked to implement classes to manage personnel's at a hospital. 
+Create a class diagram that includes classes (and some variables and methods) that manage employees and patients in a hospital management program. 
+Use interfaces and inheritance to create a hierarchy of all employees including doctors, nurses, and patients. 
+Then, write the code outline of these classes. 
+You don't have to implement any of the methods or a main method. 
+Just add a simple comment or println statement describing what the method would do.
+
+Submit: 
+1. class diagram
+2. code outline of classes from class diagram
+ 
+---------------------------------------------------- 
+ 
+Part 2 - Template Method (15 pts)
+
+Imagine writing code for building a pizza from scratch but you have multiple styles to choose from e.g. Chicago style, California style, and New York style. 
+Start by drawing a class diagram with Pizza as your abstract class and its makeFromScratch() method as the template method. 
+You will have the individual styles extend the Pizza class for and  implement primitive operations needed by makeFromScratch() like makeCrust(), addToppings(), preHeatOven(), and cook().
+Write the code representation of this class diagram. 
+Use println statements to describe what these methods do.
+
+Submit:
+1. class diagram
+2. code
+ 
+-------------------------------------------------------
+ 
+Part 3 - Enums (10 pts)
+
+You're working on a TV that has a hard coded list of channels (use an enum for this list) and you're asked to create a mechanism to switch channels. 
+Start by creating an enum class that holds 4 to 5 channels. 
+Each channel has a network name to identify it and a channel number as its value. 
+In a class called Television, create a method called changeChannel() that takes an enum from the channel class as input. 
+In the method, use switch to print out a random message for each channel depending on what input was provided.
+
+Submit:
+1. code
+
+-------------------------------------------------------
+ 
+Part 4 - Deep copy (10 pts)
+
+Create an ArrayList of Employees (contain id and name) and add 3 Employees to the ArrayList to start. 
+Next, you want to sort these Employees by their name using Collections.sort. 
+Refer back to ch 4 and lab 2 part 2 to use comparator and Collections.sort. 
+In order to avoid affecting the original list and employees, clone the ArrayList before using the sort method. 
+To make a deep copy of the ArrayList, implement the clone method of Employee and use it to create a new ArrayList of employees.
+
+Submit: 
+1. code
