@@ -1,4 +1,5 @@
-Convert Tester.java from lab1 into a JUnit testcase that uses asserts and multiple methods to test each scenario. Shell Junit testcase:
+Convert Tester.java from lab1 into a JUnit testcase that uses asserts and multiple methods to test each scenario. 
+Shell Junit testcase:
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterAll;
