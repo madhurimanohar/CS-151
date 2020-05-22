@@ -1,0 +1,11 @@
+Exercise 9.6: (20 points)
+
+Write a program that has multiple threads that make deposits and withdrawals in a shared bank account program without using locks. 
+Demonstrate how the bank  account can become corrupted.
+
+----------------------------------------------------------------
+
+Exercise 9.13: (20 points)
+
+Modify the car animation program in Chapter 4 (Ch4/animation/MoveableShape.java and AnimationTester.java) so that various car are moving at different speeds. 
+Use a separate thread for each car.
