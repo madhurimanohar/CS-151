@@ -1,6 +1,7 @@
 Java program:
 Create an Arrays.java class in a folder called lab1 (do not use packages)
-Using Java, implement the method Arrays.swapLargestAndSmallest(int[] a) that swaps the largest and smallest element in a. If there are multiple largest or smallest elements, pick the first one.
+Using Java, implement the method Arrays.swapLargestAndSmallest(int[] a) that swaps the largest and smallest element in a. 
+If there are multiple largest or smallest elements, pick the first one.
 Run the following code to test your program.
 
 public class Tester
