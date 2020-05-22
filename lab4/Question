@@ -1,0 +1,13 @@
+You want to design a new Abstract Data Type called Sequence. 
+A Sequence object contains other objects. 
+Clients need access to the elements, and a Sequence object should not expose its underlying data structure. 
+There may be multiple clients that need simultaneous access. 
+Write a Sequence class that follows the Iterator pattern. 
+Use a partially filled array as the underlying data structure of the Sequence ADT. 
+Write a minimum amount of code that includes classes, interfaces, and methods required by the Iterator pattern.
+ 
+ interface/class					Methods defined in the interface/class
+ ------------------------------------------------------------------------------------
+ Iterator <E> boolean hasNext()		Returns true if the iteration has more elements
+ E next()							Returns the next element in the iteration
+ void remove()						optional operation
