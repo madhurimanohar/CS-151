@@ -1,0 +1,27 @@
+Java program:
+Create an Arrays.java class in a folder called lab1 (do not use packages)
+Using Java, implement the method Arrays.swapLargestAndSmallest(int[] a) that swaps the largest and smallest element in a. If there are multiple largest or smallest elements, pick the first one.
+Run the following code to test your program.
+
+public class Tester
+{
+   public static void main(String[] args)
+   {
+      int[] a = new int[] { 5, 4, 1, 9, 2, 6 };
+      Arrays.swapLargestAndSmallest(a);
+      System.out.println(java.util.Arrays.toString(a));
+      System.out.println("Expected: [5, 4, 9, 1, 2, 6]");
+      a = new int[] {1, 4, 1, 9, 2, 6};
+      Arrays.swapLargestAndSmallest(a);
+      System.out.println(java.util.Arrays.toString(a));
+      System.out.println("Expected: [9, 4, 1, 1, 2, 6]");
+      a = new int[] {1, 4, 2, 9, 9, 6};
+      Arrays.swapLargestAndSmallest(a);
+      System.out.println(java.util.Arrays.toString(a));
+      System.out.println("Expected: [9, 4, 2, 1, 9, 6]");
+      a = new int[] {1};
+      Arrays.swapLargestAndSmallest(a);
+      System.out.println(java.util.Arrays.toString(a));
+      System.out.println("Expected: [1]");    
+   }
+}
