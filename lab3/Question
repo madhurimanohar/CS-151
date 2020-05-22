@@ -1,0 +1,17 @@
+Part 1 - UI Actions
+
+https://bitbucket.org/cayhorstmann/oodp3code/src/master/ch04/action/
+
+https://bitbucket.org/cayhorstmann/oodp3code/src/master/ch04/
+
+Copy the ActionTester.java file into your project.
+Change the program so that one must click the buttons in the correct order (Hello, Goodbye, Hello, ...) Hint: JButton.setEnabled.
+Change the program so that the message is changed to Hello 1, Goodbye 1, Hello 2, and so on, incrementing with each button click.
+
+Part 2: Animation
+
+https://bitbucket.org/cayhorstmann/oodp3code/src/master/ch04/animation/
+
+Copy all Java files from ~/oodp3code/ch04/animation to your project.
+Change the program so that it can animate any number of MoveableShape objects. Test with two cars.
+Add a class BouncingBall that is also a MoveableShape. It should bounce up and down.
